@@ -1,19 +1,22 @@
 <?php
 
+use App\Concert;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ViewConcertListingTest extends TestCase
 {
+    use DatabaseMigrations;
 /** @test */
 function user_can_view_a_concert_listing()
 {
     //Arrange
     $concert = Concert::create([
        'title' => 'The Red Chord',
-        'subtitle' => 'with Animosity and Lethagy',
-        'date' => \Carbon\Carbon::parse('December 13, 2016 8:00pm'),
+        'subtitle' => 'with Animosity and Lethargy',
+        'date' => Carbon::parse('December 13, 2016 8:00pm'),
         'ticket_price' => 3250,
         'venue' => 'The Mosh Pit',
         'venue_address' => '123 Example Lane',
@@ -24,11 +27,11 @@ function user_can_view_a_concert_listing()
     ]);
 
     //Act
-    $this->visit('/conserts/'.$concert->id);
+    $this->visit('/concerts/'.$concert->id);
 
     //Assert
     $this->see('The Red Chord');
-    $this->see('with Animosity and Lethagy');
+    $this->see('with Animosity and Lethargy');
     $this->see('December 13, 2016');
     $this->see('8:00pm');
     $this->see('32.50');
